@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructuras de JS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+<!--Edad 1-->
+<body class="p-4">
+    <h1>Ejercios de Estructuras de JS</h1>
+    <div class="container text-center mt-5">
+        <h1>¿Eres mayor de edad?</h1>
+        <p>Ingresa tu edad para verificarlo:</p>
+        <input type="number" id="edadInput" class="form-control w-25 mx-auto" placeholder="Ej: 21">
+        <button onclick="verificarEdad()" class="btn btn-primary mt-3">Verificar</button>
+        <p id="resultado" class="mt-4 fs-4"></p>
+    </div>
+    
+    <script>
+        function verificarEdad(){
+            const edad = parseInt(document.getElementById("edadInput").value);  
+            if (edad == 0) {
+                const mensaje = "Edad inválida";
+                document.getElementById("resultado").textContent = mensaje;
+
+            }
+            else{
+                const mensaje = edad >= 18 ? "Felicidades, eres mayor de edad." : "Eres menor de edad";
+                document.getElementById("resultado").textContent = mensaje;
+            }
+            
+        }
+    </script>
+</body>
+
+<div class="bg-light p-4">
+
+  <div class="container">
+    <h2 class="mb-4 text-center">Sistema de Notas y Aumento Salarial</h2>
+
+    <!-- EJERCICIO 2: Nota -->
+    <div class="card mb-5">
+      <div class="card-header bg-primary text-white">
+        Ejercicio 2: Calcular Nota Final del Alumno
+      </div>
+      <div class="card-body">
+        <form id="notaForm">
+          <div class="row mb-3">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Nombre del alumno" id="nombreAlumno" required>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Carnet" id="carnetAlumno" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Examen (20%)" id="examen" required>
+            </div>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Tareas (40%)" id="tareas" required>
+            </div>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Asistencia (10%)" id="asistencia" required>
+            </div>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Investigación (30%)" id="investigacion" required>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-success" onclick="calcularNota()">Calcular Nota Final</button>
+        </form>
+        <div id="resultadoNota" class="mt-3"></div>
+      </div>
+    </div>
+
+    <!-- EJERCICIO 3: Aumento Salarial -->
+    <div class="card">
+      <div class="card-header bg-warning text-dark">
+        Ejercicio 3: Calcular Aumento Salarial
+      </div>
+      <div class="card-body">
+        <form id="aumentoForm">
+          <div class="row mb-3">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Nombre del empleado" id="nombreEmpleado" required>
+            </div>
+            <div class="col">
+              <select class="form-select" id="categoria" required>
+                <option value="">Seleccione Categoría</option>
+                <option value="A">Categoría A (10%)</option>
+                <option value="B">Categoría B (7%)</option>
+                <option value="C">Categoría C (5%)</option>
+              </select>
+            </div>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Salario Actual" id="salario" required>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="calcularAumento()">Calcular Aumento</button>
+        </form>
+        <div id="resultadoAumento" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function calcularNota() {
+      const nombre = document.getElementById("nombreAlumno").value;
+      const carnet = document.getElementById("carnetAlumno").value;
+      const examen = parseFloat(document.getElementById("examen").value);
+      const tareas = parseFloat(document.getElementById("tareas").value);
+      const asistencia = parseFloat(document.getElementById("asistencia").value);
+      const investigacion = parseFloat(document.getElementById("investigacion").value);
+
+      const notaFinal = (examen * 0.20) + (tareas * 0.40) + (asistencia * 0.10) + (investigacion * 0.30);
+
+      document.getElementById("resultadoNota").innerHTML = `
+        <div class="alert alert-info">
+          <strong>Nombre:</strong> ${nombre}<br>
+          <strong>Carnet:</strong> ${carnet}<br>
+          <strong>Nota Final:</strong> ${notaFinal.toFixed(2)}
+        </div>`;
+    }
+
+    function calcularAumento() {
+      const nombre = document.getElementById("nombreEmpleado").value;
+      const categoria = document.getElementById("categoria").value;
+      const salario = parseFloat(document.getElementById("salario").value);
+      let aumento = 0;
+
+      switch (categoria.toUpperCase()) {
+        case 'A':
+          aumento = salario * 0.10;
+          break;
+        case 'B':
+          aumento = salario * 0.07;
+          break;
+        case 'C':
+          aumento = salario * 0.05;
+          break;
+        default:
+          document.getElementById("resultadoAumento").innerHTML = `<div class="alert alert-danger">Categoría inválida.</div>`;
+          return;
+      }
+
+      const nuevoSalario = salario + aumento;
+
+      document.getElementById("resultadoAumento").innerHTML = `
+        <div class="alert alert-success">
+          <strong>Nombre:</strong> ${nombre}<br>
+          <strong>Categoría:</strong> ${categoria}<br>
+          <strong>Aumento:</strong> $${aumento.toFixed(2)}<br>
+          <strong>Nuevo Salario:</strong> $${nuevoSalario.toFixed(2)}
+        </div>`;
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+
+<!--Ejercicio 4- Comparar Números -->
+<div class="card mt-4">
+  <div class="card-header bg-secondary text-white">
+    Comparar Dos Números
+  </div>
+  <div class="card-body">
+    <form id="compararForm">
+      <div class="row mb-3">
+        <div class="col">
+          <input type="number" class="form-control" placeholder="Ingrese primer número" id="numero1" required>
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" placeholder="Ingrese segundo número" id="numero2" required>
+        </div>
+      </div>
+      <button type="button" class="btn btn-dark" onclick="compararNumeros()">Comparar</button>
+    </form>
+    <div id="resultadoMayor" class="mt-3"></div>
+  </div>
+</div>
+
+<!-- JS-->
+<script>
+  function compararNumeros() {
+    const num1 = parseInt(document.getElementById("numero1").value);
+    const num2 = parseInt(document.getElementById("numero2").value);
+    let resultado = "";
+
+    if (isNaN(num1) || isNaN(num2)) {
+      resultado = `<div class="alert alert-warning">Por favor ingrese dos números válidos.</div>`;
+    } else if (num1 > num2) {
+      resultado = `<div class="alert alert-success">El número mayor es: <strong>${num1}</strong></div>`;
+    } else if (num2 > num1) {
+      resultado = `<div class="alert alert-success">El número mayor es: <strong>${num2}</strong></div>`;
+    } else {
+      resultado = `<div class="alert alert-info">Ambos números son iguales: <strong>${num1}</strong></div>`;
+    }
+
+    document.getElementById("resultadoMayor").innerHTML = resultado;
+  }
+</script>
+
+<!--Ejercicio 5-->
+<div class="card mt-4">
+    <div class="container mt-5">
+        <h2 class="text-center mb-5">Tienda de Autos - Descuentos</h2>
+
+        <div class="mb-3">
+            <label for="coche" class="form-label">Selecciona un auto:</label>
+            <select id="coche" class="form-select" onchange="actualizarImagen()">
+                <option value="fiesta">Ford Fiesta</option>
+                <option value="focus">Ford Focus</option>
+                <option value="escape">Ford Escape</option>
+            </select>
+        </div>
+
+    <div class="mb-3">
+        <label for="precio" class="form-label">Ingrese el precio ($):</label>
+        <input type="number" id="precio" class="form-control" placeholder="Ej: 20000">
+    </div>
+    <button onclick="calcularPrecioFinal()" class="btn btn-primary">Calcular Descuento</button>
+
+    <div id="precioFinal" class="mt-5 fs-5 text-success"></div>
+    </div>
+    
+    <div class="text-center">
+        <img id="imagenCoche" src="" alt="Imagen del coche">
+    </div>
+
+    
+    <script>
+        function calcularPrecioFinal(){
+            const coche = document.getElementById("coche").value;
+            const precio = parseFloat(document.getElementById("precio").value);
+
+            let descuento = 0;
+            let nombreCoche = "";
+
+            switch(coche){
+                case "fiesta":
+                    descuento = 0.05;
+                    nombreCoche = "Ford Fiesta";
+                    break;
+                case "focus":
+                    descuento = 0.10;
+                    nombreCoche = "Ford Focus";
+                    break;
+                case "escape":
+                    descuento = 0.20;
+                    nombreCoche = "Ford Escape";
+                    break;
+                default:
+                    nombreCoche: "Desconocido";
+            }
+
+            //calcular monto a descontar en dólares
+            const montoDescuento = precio * descuento;
+
+            //precio final que pagará el cliente
+            const precioFinal = precio - montoDescuento;
+
+            document.getElementById("precioFinal").innerHTML = `
+            <strong>Auto:</strong>${nombreCoche}<br>
+            <strong>Descuento aplicado:</strong>${montoDescuento}<br>
+            <strong>Precio final:</strong>${precioFinal.toFixed(2)}
+            `;
+
+        }
+
+
+        function actualizarImagen(){
+            const imagen = document.getElementById("imagenCoche");
+            const coche = document.getElementById("coche").value;
+            
+            let url = "";
+
+            switch(coche){
+                case "fiesta":
+                    url = "https://images.hgmsites.net/med/2016-ford-fiesta-4-door-sedan-se-angular-front-exterior-view_100514914_m.jpg";
+                    break;
+                case "focus":
+                    url = "https://images.hgmsites.net/med/2018-ford-focus-electric-hatch-angular-front-exterior-view_100629625_m.jpg";
+                    break;
+                case "escape":
+                    url = "https://images.jazelc.com/uploads/galpinford-m2en/2022-Ford-Escape-seo.png";
+                    break;
+                default:
+                    url = "https://external-preview.redd.it/gDvWGpie66fbsaBgdg3pOdQNks9E45h9nc2ReVJOI2o.jpg?auto=webp&s=fb5375d9c05c837ebdc8d7153cbf3b2af587b3d2";
+
+            }
+            
+            imagen.src = url;        
+        }
+        //primera imagen
+        actualizarImagen();
+    </script>
+
+<!--Ejercicio 6 Descuento de viajes turísticos -->
+<div class="card mt-4" style="background-color: #ccff00;">
+  <div class="card-header text-dark fw-bold">
+    Calcular Descuento de Viaje Turístico
+  </div>
+  <div class="card-body">
+    <form id="viajeForm">
+      <div class="row mb-3">
+        <div class="col">
+          <input type="text" class="form-control" id="origen" placeholder="Origen (ej: Palma)" required>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" id="destino" placeholder="Destino (ej: La costa del Sol)" required>
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" id="precio" placeholder="Precio del viaje" required>
+        </div>
+      </div>
+      <button type="button" class="btn btn-dark" onclick="calcularDescuento()">Calcular Descuento</button>
+    </form>
+    <div id="resultadoDescuento" class="mt-3"></div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  function calcularDescuento() {
+    const origen = document.getElementById("origen").value.trim().toLowerCase();
+    const destino = document.getElementById("destino").value.trim().toLowerCase();
+    const precio = parseFloat(document.getElementById("precio").value);
+    let descuento = 0;
+
+    if (origen === "palma" && destino === "la costa del sol") {
+      descuento = 0.05;
+    } else if (destino === "panchimalco") {
+      descuento = 0.10;
+    } else if (destino === "puerto el triunfo") {
+      descuento = 0.15;
+    }
+
+    if (isNaN(precio) || precio <= 0) {
+      document.getElementById("resultadoDescuento").innerHTML = `<div class="alert alert-warning">Por favor ingrese un precio válido.</div>`;
+      return;
+    }}
+</script>
+
+<!--Ejercicio 7 Análisis de números enteros -->
+<div class="card mt-4" style="background-color: #87CEEB;">
+  <div class="card-header fw-bold text-dark">
+    Análisis de 10 Números Enteros
+  </div>
+  <div class="card-body">
+    <form id="numerosForm">
+      <div class="row g-2 mb-3">
+        <!-- Diez campos de entrada -->
+        <div class="col-6 col-md-2" *ngFor="let i of [1..10]">
+          <input type="number" class="form-control" placeholder="N°1" id="num1">
+        </div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°2" id="num2"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°3" id="num3"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°4" id="num4"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°5" id="num5"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°6" id="num6"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°7" id="num7"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°8" id="num8"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°9" id="num9"></div>
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="N°10" id="num10"></div>
+      </div>
+      <button type="button" class="btn btn-dark" onclick="analizarNumeros()">Analizar</button>
+    </form>
+    <div id="resultadoNumeros" class="mt-3"></div>
+  </div>
+</div>
+
+<!-- JS-->
+<script>
+  function analizarNumeros() {
+    const numeros = [];
+    for (let i = 1; i <= 10; i++) {
+      const valor = parseInt(document.getElementById(`num${i}`).value);
+      if (isNaN(valor)) {
+        document.getElementById("resultadoNumeros").innerHTML = `
+          <div class="alert alert-warning">Por favor, complete todos los campos con números enteros.</div>`;
+        return;
+      }
+      numeros.push(valor);
+    }
+
+    let negativos = 0;
+    let positivos = 0;
+    let multiplos15 = 0;
+    let sumaPares = 0;
+
+    for (const num of numeros) {
+      if (num < 0) negativos++;
+      if (num > 0) positivos++;
+      if (num % 15 === 0) multiplos15++;
+      if (num % 2 === 0) sumaPares += num;
+    }
+
+    document.getElementById("resultadoNumeros").innerHTML = `
+      <div class="alert alert-success">
+        <strong>Cantidad de negativos:</strong> ${negativos} <br>
+        <strong>Cantidad de positivos:</strong> ${positivos} <br>
+        <strong>Múltiplos de 15:</strong> ${multiplos15} <br>
+        <strong>Suma de números pares:</strong> ${sumaPares}
+      </div>`;
+  }
+</script>
+<!--Ejercicio 8--Tabla de multiplicar del número ingresado -->
+<div class="card mt-4" style="background-color: #FFA500;">
+  <div class="card-header text-white fw-bold">
+    Tabla de Multiplicar (1 al 10)
+  </div>
+  <div class="card-body">
+    <form id="tablaForm">
+      <div class="mb-3">
+        <input type="number" class="form-control" id="numeroTabla" placeholder="Ingrese un número" required>
+      </div>
+      <button type="button" class="btn btn-dark" onclick="mostrarTabla()">Mostrar Tabla</button>
+    </form>
+    <div id="resultadoTabla" class="mt-3"></div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  function mostrarTabla() {
+    const numero = parseInt(document.getElementById("numeroTabla").value);
+    const resultadoDiv = document.getElementById("resultadoTabla");
+
+    if (isNaN(numero)) {
+      resultadoDiv.innerHTML = `<div class="alert alert-warning">Por favor, ingrese un número válido.</div>`;
+      return;
+    }
+
+    let tablaHtml = `<ul class="list-group">`;
+    for (let i = 1; i <= 10; i++) {
+      tablaHtml += `<li class="list-group-item">${numero} × ${i} = ${numero * i}</li>`;
+    }
+    tablaHtml += `</ul>`;
+
+    resultadoDiv.innerHTML = tablaHtml;
+  }
+</script>
+
+<!--Temperatura 9-->
+<div rclass="p-4">
+    <div class="container">
+            <h2>Conversor de Celsius a Farenheit</h2>
+            <div class="mb-4">
+                <label>Temperatura en grados Centígrados</label>
+                <input type="number" id="celsius" class="form-control" placeholder="Ej: 25">
+            </div>
+            <button onclick="convertir()" class="btn btn-primary">Convertir</button>
+            <p class="mt-3 fs-5" id="resultado"></p>
+    </div>
+
+    <script>
+        function convertir(){
+            const celsius = parseFloat(document.getElementById("celsius").value);
+            const farenheit = (celsius * 9/5) + 32;
+
+            console.log("temperatura calculada: " + farenheit);
+
+            let mensaje = "";
+            if(farenheit >= 14 && farenheit < 40) mensaje = "Temperatura Baja. Precaución, hace frío afuera. 🥶";
+            else if (farenheit >= 40 && farenheit < 72) mensaje = "Temperatura agradable, puedes disfrutar del día 😎";
+            else if (farenheit >= 72 && farenheit <= 101) mensaje = "Temperatura alta. Precaución hace muuucho calor 🥵";
+            else mensaje = "Temperatura desconocida";
+
+            document.getElementById("resultado").textContent =
+            `Fahrenheit: ${farenheit.toFixed(2)} °F - ${mensaje}`;
+
+        }
+    </script>
+
+ <!--Ejercio 10- Promedio de edades por turno -->
+<div class="card mt-4" style="background-color: #40E0D0;">
+  <div class="card-header text-white fw-bold">
+    Promedio de Edades por Turno (Mañana, Tarde, Noche)
+  </div>
+  <div class="card-body">
+    <form id="edadesForm">
+      <h5 class="fw-bold">Turno Mañana (5 estudiantes)</h5>
+      <div class="row g-2 mb-3">
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 1" id="m1"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 2" id="m2"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 3" id="m3"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 4" id="m4"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 5" id="m5"></div>
+      </div>
+
+      <h5 class="fw-bold">Turno Tarde (6 estudiantes)</h5>
+      <div class="row g-2 mb-3">
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 1" id="t1"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 2" id="t2"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 3" id="t3"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 4" id="t4"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 5" id="t5"></div>
+        <div class="col"><input type="number" class="form-control" placeholder="Edad 6" id="t6"></div>
+      </div>
+
+      <h5 class="fw-bold">Turno Noche (11 estudiantes)</h5>
+      <div class="row g-2 mb-3">
+        <!--inputs  -->
+        ${Array.from({ length: 11 }, (_, i) => `
+        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="Edad ${i + 1}" id="n${i + 1}"></div>`).join('')}
+      </div>
+
+      <button type="button" class="btn btn-dark" onclick="calcularPromedios()">Calcular Promedios</button>
+    </form>
+    <div id="resultadoEdades" class="mt-3"></div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  function calcularPromedios() {
+    // Helper para sumar edades
+    function obtenerEdades(prefijo, cantidad) {
+      let total = 0;
+      for (let i = 1; i <= cantidad; i++) {
+        const valor = parseInt(document.getElementById(`${prefijo}${i}`).value);
+        if (isNaN(valor) || valor <= 0) {
+          return null; // Edad inválida
+        }
+        total += valor;
+      }
+      return total / cantidad;
+    }
+
+    const promManiana = obtenerEdades("m", 5);
+    const promTarde = obtenerEdades("t", 6);
+    const promNoche = obtenerEdades("n", 11);
+
+    if (promManiana === null || promTarde === null || promNoche === null) {
+      document.getElementById("resultadoEdades").innerHTML = `
+        <div class="alert alert-warning">Por favor, ingrese todas las edades correctamente.</div>`;
+      return;
+    }
+
+    // promedio mayor
+    let mayor = "Mañana";
+    let maxProm = promManiana;
+
+    if (promTarde > maxProm) {
+      mayor = "Tarde";
+      maxProm = promTarde;
+    }
+    if (promNoche > maxProm) {
+      mayor = "Noche";
+      maxProm = promNoche;
+    }
+
+    document.getElementById("resultadoEdades").innerHTML = `
+      <div class="alert alert-success">
+        <strong>Promedio Turno Mañana:</strong> ${promManiana.toFixed(2)}<br>
+        <strong>Promedio Turno Tarde:</strong> ${promTarde.toFixed(2)}<br>
+        <strong>Promedio Turno Noche:</strong> ${promNoche.toFixed(2)}<br><br>
+        <strong>Turno con mayor promedio de edad:</strong> ${mayor}
+      </div>`;
+  }
+</script>
+
+</div>
+</html>
