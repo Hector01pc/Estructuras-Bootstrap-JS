@@ -506,10 +506,8 @@
       </div>
 
       <h5 class="fw-bold">Turno Noche (11 estudiantes)</h5>
-      <div class="row g-2 mb-3">
-        <!--inputs  -->
-        ${Array.from({ length: 11 }, (_, i) => `
-        <div class="col-6 col-md-2"><input type="number" class="form-control" placeholder="Edad ${i + 1}" id="n${i + 1}"></div>`).join('')}
+      <div class="row g-2 mb-3" id="inputsNoche">
+        <!-- Se generarán dinámicamente -->
       </div>
 
       <button type="button" class="btn btn-dark" onclick="calcularPromedios()">Calcular Promedios</button>
@@ -520,14 +518,24 @@
 
 <!-- JS -->
 <script>
+  // Generar inputs para turno noche dinámicamente
+  window.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("inputsNoche");
+    for (let i = 1; i <= 11; i++) {
+      const div = document.createElement("div");
+      div.className = "col-6 col-md-2";
+      div.innerHTML = `<input type="number" class="form-control" placeholder="Edad ${i}" id="n${i}">`;
+      container.appendChild(div);
+    }
+  });
+
   function calcularPromedios() {
-    // Helper para sumar edades
     function obtenerEdades(prefijo, cantidad) {
       let total = 0;
       for (let i = 1; i <= cantidad; i++) {
         const valor = parseInt(document.getElementById(`${prefijo}${i}`).value);
         if (isNaN(valor) || valor <= 0) {
-          return null; // Edad inválida
+          return null;
         }
         total += valor;
       }
@@ -544,7 +552,6 @@
       return;
     }
 
-    // promedio mayor
     let mayor = "Mañana";
     let maxProm = promManiana;
 
@@ -566,6 +573,6 @@
       </div>`;
   }
 </script>
-
+ 
 </div>
 </html>
